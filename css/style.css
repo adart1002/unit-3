@@ -1,59 +1,279 @@
+/* global styles*/
 body {
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
+    background: linear-gradient(160deg, #e8f4fb 0%, #f5fafd 60%, #ddeef8 100%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #1a3a5c;
+    min-height: 100vh;
+}
+
+#page-header {
+    text-align: center;
+    padding: 18px 20px 12px;
+    background: rgba(255,255,255,0.7);
+    border-bottom: 2px solid #93d4ef;
+}
+
+#page-header h1 {
+    margin: 0 0 6px;
+    font-size: 1.9em;
+    color: #084a87;
+    letter-spacing: 0.03em;
+}
+
+#page-header p {
+    margin: 0 auto;
+    font-size: 0.92em;
+    color: #2a5a8a;
+    max-width: 800px;
+    line-height: 1.5;
+}
+
+/* styles for main map and chart visualization */
+#viz-wrapper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 14px 10px 0;
+    gap: 12px;
+    background: transparent;
+    border: none;
+}
+
+#page-footer {
+    text-align: center;
+    padding: 14px 20px;
+    font-size: 0.82em;
+    color: #2a5a8a;
+    border-top: 1px solid #93d4ef;
+    margin-top: 18px;
+    background: rgba(255,255,255,0.5);
+}
+
+#page-footer a {
+    color: #1a7db5;
+    text-decoration: none;
+}
+
+#page-footer a:hover {
+    text-decoration: underline;
+}
+
+/* map container styles */
+.mapContainer {
+    position: relative;
+    display: inline-block;
+    flex-shrink: 0;
 }
 
 .map {
-    border: medium solid #999;
-    margin: 10px 0 0 10px;
-    float: left;
+    display: block;
+    border: 2px solid #4badd6;
+    border-radius: 6px;
+    background: #eaf6fc;
 }
 
 .countries {
-    stroke: #000;
+    stroke: #aaa;
     stroke-width: 0.5px;
-    stroke-linecap: round;
 }
 
+/* dropdown menu styles */
+.dropdown {
+    position: absolute;
+    top: 12px;
+    left: 10px;
+    z-index: 9999;
+    padding: 5px 8px;
+    background: rgba(255,255,255,0.92);
+    border: 1.5px solid #4badd6;
+    border-radius: 4px;
+    box-shadow: 2px 2px 6px rgba(4, 74, 135, 0.2);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #084a87;
+    cursor: pointer;
+}
+
+option {
+    font-weight: normal;
+    color: #1a3a5c;
+}
+
+/* zoom control buttons styles */
+.map-controls {
+    position: absolute;
+    bottom: 12px;
+    left: 10px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.zoom-btn {
+    padding: 4px 10px;
+    background: rgba(255,255,255,0.92);
+    border: 1.5px solid #4badd6;
+    border-radius: 4px;
+    box-shadow: 2px 2px 6px rgba(4,74,135,0.2);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #084a87;
+    cursor: pointer;
+}
+
+.zoom-btn:hover {
+    background: #daf3fb;
+}
+
+/* legend styles */
+.legend-container {
+    position: absolute;
+    bottom: 55px;
+    left: 10px;
+    z-index: 9999;
+    background: rgba(255,255,255,0.88);
+    border: 1.5px solid #4badd6;
+    border-radius: 4px;
+    box-shadow: 2px 2px 6px rgba(4,74,135,0.2);
+    padding: 6px 8px;
+}
+
+.legend {
+    display: block;
+}
+
+.legendTitle {
+    font-size: 0.88em;
+    font-weight: bold;
+    fill: #084a87;
+}
+
+.legendText {
+    font-size: 0.78em;
+    fill: #1a3a5c;
+}
+
+/* chart styles */
 .chart {
-    float: right;
-    margin: 7px 10px 0 0;
+    border: 2px solid #4badd6;
+    border-radius: 4px;
+    background: rgba(234, 246, 252, 0.5);
+    flex-shrink: 0;
 }
 
 .chartBackground {
-    fill: rgba(128, 128, 128, 0.2);
+    fill: rgba(255,255,255,0.6);
 }
 
 .chartFrame {
     fill: none;
-    stroke: #999;
-    stroke-width: 3px;
-    shape-rendering: crispEdges;
+    stroke: #4badd6;
+    stroke-width: 1.5px;
 }
 
 .chartTitle {
-    font-family: sans-serif;
-    font-size: 1.5em;
+    font-size: 1em;
     font-weight: bold;
+    fill: #084a87;
 }
 
 .numbers {
-    fill: white;
-    font-family: sans-serif;
-    font-size: 0.7em;
+    display: none;;
 }
 
+/* axis styles */
 .axis path,
 .axis line {
     fill: none;
-    stroke: #999;
-    stroke-width: 1px;
+    stroke: #4badd6;
     shape-rendering: crispEdges;
 }
 
 .axis text {
-    font-family: sans-serif;
-    font-size: 0.8em;
-    fill: #999;
+    font-size: 10px;
+    fill: #1a3a5c;
+}
+
+/* tooltip label styles */
+.infolabel {
+    position: absolute;
+    min-width: 160px;
+    color: #fff;
+    background: linear-gradient(135deg, #1a7db5, #084a87);
+    border: 1.5px solid #93d4ef;
+    border-radius: 5px;
+    padding: 8px 12px;
+    top: -150px;
+    pointer-events: none;
+    box-shadow: 2px 4px 10px rgba(4,74,135,0.35);
+    font-size: 0.88em;
+}
+
+.labelname {
+    font-weight: bold;
+    font-size: 1.05em;
+    border-bottom: 1px solid #93d4ef;
+    margin-bottom: 5px;
+    padding-bottom: 3px;
+}
+
+.label-main {
+    margin-bottom: 5px;
+    line-height: 1.3;
+}
+
+.label-val {
+    font-size: 1.6em;
+    font-weight: bold;
+    line-height: 1;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.label-attr {
+    font-size: 0.85em;
+    opacity: 0.85;
+    vertical-align: middle;
+}
+
+.label-stats {
+    display: flex;
+    gap: 8px;
+    font-size: 0.82em;
+    opacity: 0.9;
+    flex-wrap: wrap;
+    border-top: 1px solid rgba(147, 212, 239, 0.4);
+    padding-top: 4px;
+    margin-top: 2px;
+}
+
+/* attribute explainer styles */
+#attribute-explainer {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 15px 25px;
+    background: rgba(255, 255, 255, 0.6);
+    border-left: 5px solid #1a7db5;
+    border-radius: 4px;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.05);
+}
+
+#explainer-title {
+    margin: 0 0 8px;
+    font-size: 1.1em;
+    color: #084a87;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#explainer-body {
+    margin: 0;
+    font-size: 0.95em;
+    line-height: 1.6;
+    color: #1a3a5c;
 }
